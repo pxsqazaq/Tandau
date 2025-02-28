@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tan’dau</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: white;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 15px 20px;
+        }
+        .header .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 80px;
+            height: 70px;
+            margin-right: 10px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .get-started-btn {
+            background-color: white;
+            color: #1e3a8a;
+            width: 192px;
+            height: 51px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .get-started-btn:hover {
+            background-color: #1e3a8a;
+            color: white;
+        }
+        .hero {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 50px 20px;
+            height: 1216px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: top;
+            position: relative;
+        }
+        .hero .left-side {
+            flex: 1;
+            padding-right: 20px;
+            padding-left: 60px;
+        }
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+        .register-btn {
+            background-color: white;
+            color: #1e3a8a;
+            border: 2px solid #1e3a8a;
+        }
+        .register-btn:hover {
+            background-color: #1e3a8a;
+            color: white;
+        }
+        .ask-btn {
+            background-color: #ddd;
+            color: #1e3a8a;
+        }
+        .ask-btn:hover {
+            background-color: #bbb;
+        }
+        .right-side {
+            position: relative;
+            flex: 1;
+        }
+        .hero-image {
+            max-width: 400px;
+            max-height: 477px;
+            position: relative;
+            z-index: 2;
+        }
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-width: 680px;
+            max-height: 1216px;
+            z-index: 1;
+        }
+        .welcome {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 50px 20px;
+            text-align: center;
+            justify-content: center;
+        }
+        .welcome img {
+            max-width: 100%;
+            width: 50%;
+        }
+        .welcome-text {
+            max-width: 50%;
+            padding: 20px;
+            text-align: left;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+            }
+            .hero .left-side, .hero .right-side {
+                padding: 0;
+                max-width: 100%;
+            }
+            .welcome {
+                flex-direction: column;
+            }
+            .welcome img, .welcome-text {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="sources/logowhite.png" alt="Tan’dau Logo">
+            <h1>Tan’dau</h1>
+        </div>
+        <nav class="nav">
+            <a href="#">Ask AI</a>
+            <a href="#">Study in Kazakhstan</a>
+            <a href="#">Study Abroad</a>
+        </nav>
+        <button class="get-started-btn">Get Started</button>
+    </header>
+    <section class="hero">
+        <div class="left-side">
+            <h2>Find Your Dream Career with a Smart Assistant</h2>
+            <p>Your future starts today! Discover career paths, universities, and study opportunities with AI-driven guidance.</p>
+            <div class="buttons">
+                <button class="register-btn">Register</button>
+                <button class="ask-btn">Ask AI Now</button>
+            </div>
+        </div>
+        <div class="right-side">
+            <img class="hero-image" src="sources/developer-illustration.png" alt="Hero Image">
+            <img class="box" src="sources/box.png" alt="Box">
+        </div>
+    </section>
+    <section class="welcome">
+        <img src="sources/career_path.png" alt="Career Path">
+        <h1>Welcome to Tan’dau!</h1>
+        <div class="welcome-text">
+            <p>We are here to guide you toward a successful future by helping you choose the right career and university. Whether you're exploring study options in Kazakhstan or abroad, our smart AI assistant and expert resources ensure you make informed decisions.</p>
+        </div>
+    </section>
+</body>
+</html>
