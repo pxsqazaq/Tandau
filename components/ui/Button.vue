@@ -38,7 +38,9 @@ const classes = computed(() => {
       "bg-[#514FD5] text-white hover:bg-blue-600": props.variant === "primary",
       "bg-[#F7AB00] text-white hover:bg-gray-800":
         props.variant === "secondary",
-      "border border-gray-300 text-gray-900 hover:bg-gray-100":
+      "bg-blue-200 text-blue-500 hover:bg-blue-400 hover:text-white":
+        props.variant === "soft",
+      "border border-[#514FD5] text-[#514FD5] hover:bg-[#514FD5] hover:text-white":
         props.variant === "outline",
       "text-gray-900 hover:bg-gray-100": props.variant === "ghost",
       "bg-transparent hover:text-blue-600 !p-2": props.variant === "icon",

@@ -96,7 +96,7 @@ const handleSubmit = async () => {
         </p>
       </fieldset>
 
-      <NuxtLink to="https://t.me/Shrekbek" target="_blank" class="underline">
+      <NuxtLink to="/forgot-password" class="underline">
         Forgot Password?
       </NuxtLink>
 

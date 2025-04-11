@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import ChatSidebar from "~/components/Chat/Sidebar.vue";
-import Chat from "~/components/Chat/index.vue";
-
 type Chat = {
   id: number;
   name: string;

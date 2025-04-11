@@ -64,7 +64,7 @@ const items = [
 </script>
 
 <template>
-  <div>
+  <div class="space-y-2">
     <section class="flex h-dvh w-full">
       <div
         class="m-auto flex h-full w-[60%] flex-col justify-center gap-6 p-16"
@@ -97,6 +97,42 @@ const items = [
 
         <NuxtImg src="/hero.png" class="h-[60%] w-[60%] object-contain" />
       </div>
+    </section>
+
+    <section class="flex w-full flex-col items-center gap-8 p-20">
+      <h2 class="text-center text-4xl font-semibold">
+        🌟 Feeling Lost About Your Future Career?
+      </h2>
+      <p class="text-center">
+        You’re not alone - choosing the <strong>right</strong> path can be
+        confusing, stressful, even scary. But it doesn't have to be.
+      </p>
+
+      <div class="flex items-center justify-center">
+        <div class="w-[50%] space-y-4">
+          <p>
+            <strong>Tan'dau</strong> is here to turn your uncertainty into
+            confidence. Let our smart AI dive deep into your strengths,
+            passions, and hidden potential - and guide you to a future where you
+            thrive, not just survive.
+          </p>
+
+          <p>
+            Because you deserve more than “just a job”. You deserve a path that
+            inspires you every day.
+          </p>
+
+          <p>Start your journey now. Discover who you're meant to be.</p>
+        </div>
+
+        <div class="flex h-72 w-[40%] items-end justify-center">
+          <NuxtImg src="/AI.png" class="h-[150%] w-[150%] object-contain" />
+        </div>
+      </div>
+
+      <UiButton variant="primary" class="flex items-center"
+        >Find My Career Path</UiButton
+      >
     </section>
 
     <section class="flex h-[80vh] w-full flex-col gap-10 p-20">
