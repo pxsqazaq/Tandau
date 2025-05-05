@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase:
-        process.env.NUXT_PUBLIC_API_BASE || "http://195.49.212.104:8000/api/v1",
+        process.env.NUXT_PUBLIC_API_BASE || "https://api.tanday.kz/api/v1",
       accessTokenLifetime:
         process.env.NUXT_PUBLIC_ACCESS_TOKEN_LIFETIME || "86400",
     },
