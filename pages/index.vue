@@ -1,64 +1,67 @@
 <script setup lang="ts">
+const userStore = useUserStore();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const opportunities = [
   {
     image: "/opportunities/opportunity-1.png",
     color: "bg-[#514FD5]",
-    title: "Personalized Career Recommendations",
-    text: "AI-driven guidance to help you choose the best career path based on your strengths and interests.",
+    title: t('main.personalized'),
+    text: t('main.personalized_description'),
   },
   {
     image: "/opportunities/opportunity-2.png",
     color: "bg-[#F7AB00]",
-    title: "University and Program Matching",
-    text: "Find the most suitable universities and programs worldwide for your chosen career.",
+    title:t('main.universities'),
+    text: t('main.universities_description'),
   },
   {
     image: "/opportunities/opportunity-3.png",
     color: "bg-[#F7AB00]",
-    title: "Insights into Future Professions",
-    text: "Stay ahead with expert insights on in-demand careers and emerging industries.",
+    title: t('main.insights'),
+    text: t('main.insights_description'),
   },
   {
     image: "/opportunities/opportunity-4.png",
     color: "bg-[#514FD5]",
-    title: "Stress-Free Decision-Making",
-    text: "We analyze all the options for you—so you can focus on your future with confidence",
+    title: t('main.stress'),
+    text:  t('main.stress_description'),
   },
 ];
 
 const stages = [
   {
-    title: "Take a test",
-    text: "Answer a few simple questions about your interests and strengths.",
+    title: t('main.test'),
+    text: t('main.test_description'),
   },
   {
-    title: "Get Personalized Results",
-    text: "Receive AI-driven recommendations tailored to your potential.",
+    title: t('main.personalizedResults'),
+    text: t('main.personalizedResults_description'),
   },
   {
-    title: "Explore Career Paths",
-    text: "Learn about different professions and the skills required.",
+    title: t('main.exploreCareers'),
+    text: t('main.exploreCareers_description'),
   },
 ];
 
 const items = [
   {
-    text: "Can a career be chosen based on strengths?",
+    text: t('main.question1'),
   },
   {
-    text: "Is career suitability determined with the help of Tan'dau?",
+    text: t('main.question2'),
   },
   {
-    text: "Is preparation for a future profession provided while still in school?",
+    text: t('main.question3'),
   },
   {
-    text: "Is support given at every stage of career orientation?",
+    text: t('main.question4'),
   },
   {
-    text: "Are chances of making the right career choice increased through testing?",
+    text: t('main.question5'),
   },
   {
-    text: "Is the path to a dream profession guided by Tan'dau?",
+    text: t('main.question6'),
   },
 ];
 </script>
@@ -67,62 +70,55 @@ const items = [
   <div class="space-y-2">
     <section class="flex h-dvh w-full">
       <div
-        class="m-auto flex h-full w-[60%] flex-col justify-center gap-6 p-16"
+        class="m-auto flex h-full w-[60%] flex-col justify-center gap-16 p-16"
       >
         <h2 class="text-6xl font-bold">
-          Find Your Dream Career with a Smart Assistant
+          {{ $t("main.title") }}
         </h2>
         <p class="text-3xl">
-          Tan'dau is an AI-powered career guidance platform that helps students
-          choose the right profession, university, and skills based on their
-          strengths and market trends—making career decisions simple and
-          data-driven. 🚀
+          {{ $t("main.description") }}
         </p>
 
-        <div class="mt-16 flex w-full items-center justify-evenly">
-          <NuxtLink to="/sign-up">
-            <UiButton class="uppercase" variant="secondary">Register</UiButton>
-          </NuxtLink>
-          <NuxtLink to="chat">
-            <UiButton class="uppercase" variant="primary">Ask ai now</UiButton>
-          </NuxtLink>
-        </div>
+        <NuxtLink v-if="!userStore.isAuthenticated" to="/sign-up">
+          <UiButton class="uppercase" variant="primary" size="lg">
+            {{ $t("main.register") }}
+          </UiButton>
+        </NuxtLink>
+        <NuxtLink v-else to="chat">
+          <UiButton variant="secondary" size="lg">
+            {{ $t("main.find_career") }}
+          </UiButton>
+        </NuxtLink>
       </div>
 
       <div class="relative flex h-full w-[40%] items-center justify-center">
-        <NuxtImg
-          src="/bg-hero.png"
-          class="absolute bottom-0 right-0 top-0 -z-10 h-full w-full"
-        />
-
-        <NuxtImg src="/hero.png" class="h-[60%] w-[60%] object-contain" />
+        <NuxtImg src="/hero.png" class="h-[70%] w-[70%] object-contain" />
       </div>
     </section>
 
-    <section class="flex w-full flex-col items-center gap-8 p-20">
-      <h2 class="text-center text-4xl font-semibold">
-        🌟 Feeling Lost About Your Future Career?
-      </h2>
-      <p class="text-center">
-        You’re not alone - choosing the <strong>right</strong> path can be
-        confusing, stressful, even scary. But it doesn't have to be.
-      </p>
+    <section class="flex w-full flex-col items-center gap-16 p-20">
+      <div class="flex flex-col gap-8">
+        <h2 class="text-center text-4xl font-semibold">
+          {{ $t("main.feeling_lost") }}
+        </h2>
+        <p class="text-center">
+          {{ $t("main.not_alone") }}
+        </p>
+      </div>
 
       <div class="flex items-center justify-center">
         <div class="w-[50%] space-y-4">
           <p>
-            <strong>Tan'dau</strong> is here to turn your uncertainty into
-            confidence. Let our smart AI dive deep into your strengths,
-            passions, and hidden potential - and guide you to a future where you
-            thrive, not just survive.
+            <strong>Tan'dau</strong> {{ $t("main.feeling_lost_description1") }}
           </p>
 
           <p>
-            Because you deserve more than “just a job”. You deserve a path that
-            inspires you every day.
+            {{ $t("main.feeling_lost_description2") }}
           </p>
 
-          <p>Start your journey now. Discover who you're meant to be.</p>
+          <p>
+            {{ $t("main.feeling_lost_description3") }}
+          </p>
         </div>
 
         <div class="flex h-72 w-[40%] items-end justify-center">
@@ -130,14 +126,14 @@ const items = [
         </div>
       </div>
 
-      <UiButton variant="primary" class="flex items-center"
-        >Find My Career Path</UiButton
-      >
+      <UiButton variant="primary" class="flex items-center">
+        {{ $t("main.find_career") }}
+      </UiButton>
     </section>
 
     <section class="flex h-[80vh] w-full flex-col gap-10 p-20">
       <h2 class="text-center text-4xl font-semibold">
-        With Tan'dau, You Will Get:
+        {{ $t("main.withTandau") }}
       </h2>
 
       <div class="grid grid-cols-2 gap-16">
@@ -162,7 +158,7 @@ const items = [
     <section class="flex w-full flex-col gap-20 p-20">
       <h2 class="m-auto flex items-center gap-4 text-4xl font-semibold">
         <NuxtImg src="/Rocket.png" />
-        Tan'dau is with you at every stage
+        {{ $t("main.stage") }}
       </h2>
 
       <div class="flex items-center justify-center gap-10">
@@ -215,7 +211,7 @@ const items = [
           class="flex flex-col items-center justify-between gap-4 rounded-lg border-2 border-[#F7AB00] p-6 text-center"
         >
           <p class="max-w-80">• {{ item.text }}</p>
-          <strong class="text-2xl text-[#F7AB00]"> YES </strong>
+          <strong class="text-2xl text-[#F7AB00]"> {{ $t("main.yes") }} </strong>
         </div>
       </div>
       <NuxtImg
@@ -226,7 +222,7 @@ const items = [
 
     <section class="flex w-full flex-col gap-20 p-20">
       <h2 class="m-auto flex items-center gap-4 text-4xl font-semibold">
-        Partner Schools & Universities
+        {{ $t("main.partners") }}
       </h2>
 
       <div class="grid grid-cols-4 justify-items-center gap-16">

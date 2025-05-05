@@ -44,18 +44,19 @@ const handleSubmit = async () => {
       </NuxtLink>
 
       <h3 class="text-center text-2xl font-semibold text-[#00356F]">
-        Forgot Password
+        {{ $t("auth.forgot") }}
       </h3>
       <p class="text-center text-gray-500">
-        Please enter your email address so we can send you an email to reset
-        your password.
+        {{ $t("auth.forgotDescription") }}
       </p>
 
       <fieldset
         :class="{ 'border-gray-900': isFocused.email }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">email address</legend>
+        <legend class="uppercase">
+          {{ $t("auth.email") }}
+        </legend>
         <UiInput
           v-model="state.email"
           type="email"
@@ -69,7 +70,7 @@ const handleSubmit = async () => {
       </fieldset>
 
       <UiButton class="uppercase" type="submit" variant="secondary" block>
-        Send
+        {{ $t("auth.send") }}
       </UiButton>
     </form>
   </div>

@@ -1,26 +1,23 @@
-interface Item {
-  id: number;
-  image: string;
-  title: string;
-  description: string;
-  text: string[];
-  to: string;
-}
+import type { University } from "~/types/university";
 
-interface FavoriteState {
-  favorites: Item[];
-}
+export const useFavoriteStore = defineStore(
+  "favorite",
+  () => {
+    const favorites = ref<University[]>([]);
 
-export const useFavoriteStore = defineStore("favorite", {
-  state: (): FavoriteState => ({
-    favorites: [],
-  }),
-  actions: {
-    addToFavorites(item: Item) {
-      this.favorites.push(item);
-    },
-    removeFavorite(id: number) {
-      this.favorites = this.favorites.filter((item) => item.id !== id);
-    },
+    const addToFavorites = (item: University) => {
+      favorites.value.push(item);
+    };
+
+    const removeFavorite = (id: number) => {
+      favorites.value = favorites.value.filter((item) => item.id !== id);
+    };
+
+    return {
+      favorites,
+      addToFavorites,
+      removeFavorite,
+    };
   },
-});
+  { persist: true },
+);

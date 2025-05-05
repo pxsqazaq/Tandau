@@ -11,7 +11,7 @@
     </span>
 
     <div class="mt-4 bg-[#2A4D69] p-4 text-white">
-      © All rights reserved. Almaty, Kazakhstan, 2025
+      {{ $t("main.rights") }}
     </div>
   </footer>
 </template>

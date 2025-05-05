@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 const route = useRoute();
-const hideNavPages = ["/sign-in", "/sign-up", "/forgot-password"];
+const userStore = useUserStore();
+const { locales, locale, setLocale } = useI18n();
 
 const signOut = ref(false);
+const hideNavPages = ["/sign-in", "/sign-up", "/forgot-password"];
+
+const handleSignOut = async () => {
+  await userStore.signOut();
+  signOut.value = false;
+};
 </script>
 
 <template>
@@ -32,7 +41,7 @@ const signOut = ref(false);
             to="/chat"
             :class="{ 'text-white': route.path.startsWith('/study/') }"
           >
-            Find My Path with AI
+            {{ $t("header.ai") }}
           </NuxtLink>
         </li>
 
@@ -41,7 +50,7 @@ const signOut = ref(false);
             to="/study/kz"
             :class="{ 'text-white': route.path.startsWith('/study/') }"
           >
-            Study in Kazakhstan
+            {{ $t("header.kz") }}
           </NuxtLink>
         </li>
 
@@ -50,16 +59,23 @@ const signOut = ref(false);
             to="/study/abroad"
             :class="{ 'text-white': route.path.startsWith('/study/') }"
           >
-            Study Abroad
+            {{ $t("header.abroad") }}
           </NuxtLink>
         </li>
 
         <li>
-          <UiDropdownMenu>
+          <NuxtLink
+            v-if="!userStore.isAuthenticated"
+            to="/sign-in"
+            :class="{ 'text-white': route.path.startsWith('/study/') }"
+          >
+          {{ $t("header.signIn") }}
+          </NuxtLink>
+          <UiDropdownMenu v-else>
             <template #trigger>
               <Icon
                 name="lucide:circle-user"
-                class="text-xl font-semibold"
+                class="mt-2 text-xl font-semibold"
                 :class="{
                   'text-white': route.path.startsWith('/study/'),
                 }"
@@ -69,13 +85,13 @@ const signOut = ref(false);
             <template #menu="close">
               <NuxtLink to="/profile" @click="close.closeDropdown">
                 <UiButton variant="ghost" block class="!justify-start gap-2">
-                  <Icon name="lucide:circle-user" /> Profile
+                  <Icon name="lucide:circle-user" /> {{ $t("header.profile") }}
                 </UiButton>
               </NuxtLink>
 
               <NuxtLink to="/favorites" @click="close.closeDropdown">
                 <UiButton variant="ghost" block class="!justify-start gap-2">
-                  <Icon name="lucide:bookmark" /> Bookmarks
+                  <Icon name="lucide:bookmark" /> {{ $t("header.bookmarks") }}
                 </UiButton>
               </NuxtLink>
 
@@ -88,7 +104,39 @@ const signOut = ref(false);
                   signOut = true;
                 "
               >
-                <Icon name="lucide:log-out" /> Sign Out
+                <Icon name="lucide:log-out" /> {{ $t("header.signOut") }}
+              </UiButton>
+            </template>
+          </UiDropdownMenu>
+        </li>
+
+        <li>
+          <UiDropdownMenu>
+            <template #trigger>
+              <span
+                class="flex items-center justify-between rounded-lg border-2 border-black px-2"
+                :class="{
+                  'border-white text-white': route.path.startsWith('/study/'),
+                }"
+              >
+                {{ locale }}
+              </span>
+            </template>
+            <template #menu="close">
+              <UiButton
+                v-for="(loc, index) in locales"
+                :key="index"
+                variant="ghost"
+                block
+                class="!justify-start"
+                @click="
+                  () => {
+                    setLocale(loc.code);
+                    close.closeDropdown();
+                  }
+                "
+              >
+                {{ loc.name }}
               </UiButton>
             </template>
           </UiDropdownMenu>
@@ -101,7 +149,7 @@ const signOut = ref(false);
         Are you sure you want to sign out?
       </h2>
       <div class="my-4 flex items-center justify-center gap-4">
-        <UiButton variant="outline" @click="signOut = false">Sign Out</UiButton>
+        <UiButton variant="outline" @click="handleSignOut">Sign Out</UiButton>
         <UiButton variant="primary" @click="signOut = false">Cancel</UiButton>
       </div>
     </UiModal>

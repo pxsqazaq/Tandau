@@ -1,45 +1,90 @@
 <script setup lang="ts">
+import type { Chat } from "~/types/chat";
+
 const props = defineProps<{
-  chats: { id: number; name: string; time: string }[];
+  chats: Chat[];
   selectedId: number | null;
 }>();
 
 const emit = defineEmits<{
-  (e: "select", chat: { id: number; name: string; time: string }): void;
+  (e: "select", chat: Chat): void;
 }>();
 
-const isSameDay = (d1: Date, d2: Date) => {
-  return d1.toDateString() === d2.toDateString();
+const createSafeDate = (dateString: string): Date => {
+  try {
+    if (!dateString) return new Date(0);
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      console.error("Invalid date:", dateString);
+      return new Date(0);
+    }
+
+    return date;
+  } catch (error) {
+    console.error("Date parsing error:", error, "for date:", dateString);
+    return new Date(0);
+  }
 };
 
-const isWithinLastDays = (date: Date, days: number) => {
+const getStartOfDay = (date: Date): Date => {
+  const start = new Date(date);
+  start.setHours(0, 0, 0, 0);
+  return start;
+};
+
+const today = computed(() => {
+  const now = getStartOfDay(new Date());
+  return props.chats.filter((chat) => {
+    const chatDate = getStartOfDay(createSafeDate(chat.created_at));
+    return chatDate.getTime() === now.getTime();
+  });
+});
+
+const week = computed(() => {
   const now = new Date();
-  const target = new Date(date);
-  const diffTime = now.getTime() - target.getTime();
-  const diffDays = diffTime / (1000 * 3600 * 24);
-  return diffDays <= days;
-};
+  const startOfToday = getStartOfDay(now);
+  const oneWeekAgo = new Date(now);
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-const today = props.chats.filter((chat) =>
-  isSameDay(new Date(chat.time), new Date()),
-);
-const week = props.chats.filter(
-  (chat) =>
-    isWithinLastDays(new Date(chat.time), 7) &&
-    !isSameDay(new Date(chat.time), new Date()),
-);
-const month = props.chats.filter(
-  (chat) =>
-    isWithinLastDays(new Date(chat.time), 30) &&
-    !isWithinLastDays(new Date(chat.time), 7),
-);
-const other = props.chats.filter(
-  (chat) => !isWithinLastDays(new Date(chat.time), 30),
-);
+  return props.chats.filter((chat) => {
+    const chatDate = createSafeDate(chat.created_at);
+    return (
+      chatDate > oneWeekAgo &&
+      getStartOfDay(chatDate).getTime() < startOfToday.getTime()
+    );
+  });
+});
+
+const month = computed(() => {
+  const now = new Date();
+  const oneWeekAgo = new Date(now);
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  const oneMonthAgo = new Date(now);
+  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+
+  return props.chats.filter((chat) => {
+    const chatDate = createSafeDate(chat.created_at);
+    return chatDate > oneMonthAgo && chatDate <= oneWeekAgo;
+  });
+});
+
+const other = computed(() => {
+  const now = new Date();
+  const oneMonthAgo = new Date(now);
+  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+
+  return props.chats.filter((chat) => {
+    const chatDate = createSafeDate(chat.created_at);
+    return chatDate <= oneMonthAgo;
+  });
+});
 </script>
 
 <template>
-  <div class="h-full w-80 overflow-y-scroll border-r">
+  <div class="h-full overflow-y-scroll">
     <ChatSection
       label="Today"
       :chats="today"
@@ -62,7 +107,7 @@ const other = props.chats.filter(
     />
     <hr />
     <ChatSection
-      label="Earlier"
+      :label="$t('chat.earlier')"
       :chats="other"
       :selected-id="selectedId"
       @select="emit('select', $event)"

@@ -2,11 +2,25 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@nuxt/image", "@nuxt/icon"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "@nuxt/image",
+    "@nuxt/icon",
+    "@nuxtjs/i18n",
+  ],
+  i18n: {
+    defaultLocale: "en",
+    locales: [
+      { code: "en", name: "English", file: "en.json" },
+      { code: "ru", name: "Russian", file: "ru.json" },
+      { code: "kz", name: "Kazakh", file: "kz.json" },
+    ],
+  },
   runtimeConfig: {
     public: {
       apiBase:
-        process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8000/api/v1",
+        process.env.NUXT_PUBLIC_API_BASE || "http://195.49.212.104:8000/api/v1",
       accessTokenLifetime:
         process.env.NUXT_PUBLIC_ACCESS_TOKEN_LIFETIME || "86400",
     },

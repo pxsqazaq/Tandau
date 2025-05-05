@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import * as z from "zod";
 
+const userStore = useUserStore();
+
 const schema = z.object({
   username: z
     .string()
@@ -53,7 +55,7 @@ const handleSubmit = async () => {
     return;
   }
 
-  console.log("result: ", state.username, state.email, state.password);
+  await userStore.signUp(result.data);
 };
 </script>
 
@@ -64,16 +66,19 @@ const handleSubmit = async () => {
       @submit.prevent="handleSubmit"
     >
       <h3 class="text-center text-2xl font-semibold text-[#00356F]">
-        Sign up to Tan'dau
+        {{ $t("auth.signUpTandau") }}
       </h3>
 
       <fieldset
         :class="{ 'border-gray-900': isFocused.email }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">user name</legend>
+        <legend class="uppercase">
+          {{ $t("auth.username") }}
+        </legend>
         <UiInput
           v-model="state.username"
+          name="username"
           type="text"
           class="border-none outline-none focus:ring-0"
           @focus="isFocused.username = true"
@@ -88,9 +93,12 @@ const handleSubmit = async () => {
         :class="{ 'border-gray-900': isFocused.email }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">email address</legend>
+        <legend class="uppercase">
+          {{ $t("auth.email") }}
+        </legend>
         <UiInput
           v-model="state.email"
+          name="email"
           type="email"
           class="border-none outline-none focus:ring-0"
           @focus="isFocused.email = true"
@@ -105,10 +113,13 @@ const handleSubmit = async () => {
         :class="{ 'border-gray-900': isFocused.password }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">password</legend>
+        <legend class="uppercase">
+          {{ $t("auth.password") }}
+        </legend>
         <div class="flex items-center gap-2 pr-2">
           <UiInput
             v-model="state.password"
+            name="password"
             :type="showPassword ? 'text' : 'password'"
             class="border-none outline-none focus:ring-0"
             @focus="isFocused.password = true"
@@ -137,18 +148,20 @@ const handleSubmit = async () => {
             type="checkbox"
             class="!w-4 border-none outline-none focus:ring-0"
           />
-          I agree to the Terms of Service and Privacy Policy.
+          {{ $t("auth.privacy") }}
         </label>
       </fieldset>
 
       <UiButton class="uppercase" type="submit" variant="secondary" block>
-        CREATE AN ACCOUNT
+        {{ $t("auth.create") }}
       </UiButton>
 
       <span class="flex items-center gap-2">
-        <p>Already have an Account?</p>
+        <p>
+          {{ $t("auth.alreadyHaveAccount") }}
+        </p>
         <NuxtLink to="/sign-in" class="text-[#514FD5] underline">
-          Sign In
+          {{ $t("auth.signIn") }}
         </NuxtLink>
       </span>
 
@@ -157,7 +170,7 @@ const handleSubmit = async () => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
           class="h-8 w-8"
         />
-        Sign Up with Google
+        {{ $t("auth.signUpWithGoogle") }}
       </UiButton>
     </form>
   </div>

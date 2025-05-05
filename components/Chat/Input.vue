@@ -1,4 +1,11 @@
 <script setup lang="ts">
+defineProps({
+  placeholder: {
+    type: String,
+    default: "Message Tan'dau...",
+  },
+});
+
 const emit = defineEmits<{
   (e: "send", text: string): void;
 }>();
@@ -28,7 +35,7 @@ const handleSubmit = () => {
       <UiInput
         v-model="input"
         type="text"
-        placeholder="Message Tan'dau..."
+        :placeholder="placeholder"
         class="border-none outline-none focus:ring-0"
       />
 
@@ -45,7 +52,7 @@ const handleSubmit = () => {
       </UiButton>
     </form>
     <small class="text-gray-400">
-      Tan’dau AI can make mistakes. Check our Terms & Conditions.
+      Tan'dau AI can make mistakes. Check our Terms & Conditions.
     </small>
   </div>
 </template>

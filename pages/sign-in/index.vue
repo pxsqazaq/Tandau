@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import * as z from "zod";
 
+const userStore = useUserStore();
+
 const schema = z.object({
   email: z.string().email("Invalid email"),
   password: z.string().min(8, "Must be at least 8 characters"),
@@ -35,7 +37,7 @@ const handleSubmit = async () => {
     return;
   }
 
-  console.log("result: ", state.email, state.password);
+  await userStore.signIn(result.data);
 };
 </script>
 
@@ -46,16 +48,19 @@ const handleSubmit = async () => {
       @submit.prevent="handleSubmit"
     >
       <h3 class="text-center text-2xl font-semibold text-[#00356F]">
-        Log In to Tan’dau
+        {{ $t("auth.login") }}
       </h3>
 
       <fieldset
         :class="{ 'border-gray-900': isFocused.email }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">email address</legend>
+        <legend class="uppercase">
+          {{ $t("auth.email") }}
+        </legend>
         <UiInput
           v-model="state.email"
+          name="email"
           type="email"
           class="border-none outline-none focus:ring-0"
           @focus="isFocused.email = true"
@@ -70,10 +75,13 @@ const handleSubmit = async () => {
         :class="{ 'border-gray-900': isFocused.password }"
         class="w-full border border-gray-400 p-2"
       >
-        <legend class="uppercase">password</legend>
+        <legend class="uppercase">
+          {{ $t("auth.password") }}
+        </legend>
         <div class="flex items-center gap-2 pr-2">
           <UiInput
             v-model="state.password"
+            name="password"
             :type="showPassword ? 'text' : 'password'"
             class="border-none outline-none focus:ring-0"
             @focus="isFocused.password = true"
@@ -97,7 +105,7 @@ const handleSubmit = async () => {
       </fieldset>
 
       <NuxtLink to="/forgot-password" class="underline">
-        Forgot Password?
+        {{ $t("auth.forgotPassword") }}
       </NuxtLink>
 
       <fieldset class="w-full">
@@ -106,28 +114,32 @@ const handleSubmit = async () => {
             type="checkbox"
             class="!w-4 border-none outline-none focus:ring-0"
           />
-          Remember me
+          {{ $t("auth.rememberMe") }}
         </label>
       </fieldset>
 
       <UiButton class="uppercase" type="submit" variant="secondary" block>
-        Proceed
+        {{ $t("auth.proceed") }}
       </UiButton>
 
       <span class="flex items-center gap-2">
-        <p>Don’t have an Account?</p>
+        <p>
+          {{ $t("auth.notHaveAccount") }}
+        </p>
         <NuxtLink to="/sign-up" class="text-[#514FD5] underline">
-          Sign Up
+          {{ $t("auth.signUp") }}
         </NuxtLink>
       </span>
 
-      <UiButton type="button" class="flex items-center gap-2">
-        <NuxtImg
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
-          class="h-8 w-8"
-        />
-        Sign In with Google
-      </UiButton>
+      <NuxtLink to="https://api.tanday.kz/api/v1/auth/google/login">
+        <UiButton type="button" class="flex items-center gap-2">
+          <NuxtImg
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
+            class="h-8 w-8"
+          />
+          {{ $t("auth.withGoogle") }}
+        </UiButton>
+      </NuxtLink>
     </form>
   </div>
 </template>

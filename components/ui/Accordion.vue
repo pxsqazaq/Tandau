@@ -4,7 +4,7 @@ defineProps({
   content: String,
 });
 
-const isOpen = ref(false);
+const isOpen = ref(true);
 </script>
 
 <template>

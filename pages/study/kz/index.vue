@@ -1,17 +1,16 @@
 <script setup lang="ts">
-const subjects = [
-  "Mathematics",
-  "Physics",
-  "Geography",
-  "Biology",
-  "World History",
-  "Fundamentals of law",
-  "Foreign language",
-  "Creative exam",
-  "Russian language",
-  "Kazakh language",
-  "Informatics",
-];
+import type { Subject } from "~/types/subject";
+
+const subjectStore = useSubjectStore();
+const { subjects, isLoading } = storeToRefs(subjectStore);
+
+const isModalOpen = ref(false);
+const selectedSubject = ref<Subject | null>(null);
+
+const openModal = (subject: Subject) => {
+  selectedSubject.value = subject;
+  isModalOpen.value = true;
+};
 </script>
 
 <template>
@@ -25,12 +24,10 @@ const subjects = [
       <div class="flex h-full w-full items-center bg-[rgba(0,0,0,0.6)] p-20">
         <div class="space-y-10 text-white">
           <h2 class="text-5xl font-semibold">
-            Can You Get a Grant? <br />
-            Check Your Probability Now!
+            {{ $t("kz.title") }}
           </h2>
           <p class="text-2xl font-normal">
-            Enter your scores and preferences to see your <br />
-            chances of studying on a grant in Kazakhstan.
+            {{ $t("kz.subtitle") }}
           </p>
         </div>
       </div>
@@ -38,11 +35,10 @@ const subjects = [
 
     <div class="space-y-8 p-20">
       <h2 class="text-center text-4xl font-bold">
-        Select Your Specialized Subjects 🎯
+        {{ $t("kz.select") }}
       </h2>
       <p class="text-center text-lg font-normal">
-        Select your first specialized subject and find out your chances of
-        securing a study grant based on your chosen subjects and UNT scores
+        {{ $t("kz.description") }}
       </p>
     </div>
 
@@ -53,13 +49,18 @@ const subjects = [
         <NuxtImg width="64" src="/Bank.png" class="rotate-12" />
       </div>
 
-      <div class="flex flex-col gap-6">
+      <div v-if="isLoading" class="flex flex-col gap-6">
+        <UiButton v-for="i in 14" :key="i" variant="soft">Loading...</UiButton>
+      </div>
+
+      <div v-else class="flex flex-col gap-6">
         <UiButton
-          v-for="(subject, index) in subjects"
-          :key="index"
+          v-for="subject in subjects"
+          :key="subject.id"
           variant="soft"
+          @click="openModal(subject)"
         >
-          {{ subject }}
+          {{ subject.name }}
         </UiButton>
       </div>
 
@@ -69,5 +70,10 @@ const subjects = [
         <NuxtImg width="64" src="/Earth.png" class="ml-auto" />
       </div>
     </section>
+
+    <SubjectCombination
+      v-model:is-open="isModalOpen"
+      :selected-subject="selectedSubject"
+    />
   </div>
 </template>

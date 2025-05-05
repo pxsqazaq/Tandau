@@ -1,78 +1,58 @@
 <script setup lang="ts">
-type Chat = {
-  id: number;
-  name: string;
-  time: string;
+import type { Chat } from "~/types/chat";
+
+const chatStore = useChatStore();
+const { chat, chats, selectedChatId } = storeToRefs(chatStore);
+
+const selectedChat = computed(() => chat.value);
+const filteredMessages = computed(() => selectedChat.value?.messages || []);
+
+const handleSelectChat = (selectedChat: Chat) => {
+  chatStore.selectedChatId = selectedChat.id;
 };
 
-type Message = {
-  id: number;
-  chatId: number;
-  author: "user" | "assistant";
-  text: string;
-  time: string;
+const handleSend = async (text: string) => {
+  if (selectedChatId.value) {
+    await chatStore.sendMessage({
+      chat_id: selectedChatId.value,
+      user_message: text,
+    });
+  } else {
+    const newChatData = await chatStore.createChat({ chat_name: text });
+    if (newChatData) {
+      chatStore.selectedChatId = newChatData.id;
+      await chatStore.sendMessage({
+        chat_id: newChatData.id,
+        user_message: text,
+      });
+    }
+  }
 };
 
-const chats: Chat[] = [
-  { id: 1, name: "Chat 1", time: "2025-04-06T10:00:00Z" },
-  { id: 2, name: "Chat 2", time: "2025-04-04T15:30:00Z" },
-  { id: 3, name: "Chat 3", time: "2025-03-29T11:20:00Z" },
-  { id: 4, name: "Chat 4", time: "2025-03-10T09:00:00Z" },
-  { id: 5, name: "Chat 5", time: "2025-02-15T14:45:00Z" },
-];
-
-const messages = ref<Message[]>([
-  {
-    id: 1,
-    chatId: 1,
-    author: "assistant",
-    text: "Hello! How can I help you today?",
-    time: "2025-04-06T10:00:00Z",
-  },
-  {
-    id: 2,
-    chatId: 1,
-    author: "user",
-    text: "I have a question about my order.",
-    time: "2025-04-06T10:05:00Z",
-  },
-  {
-    id: 3,
-    chatId: 2,
-    author: "assistant",
-    text: "Hi! What do you need assistance with?",
-    time: "2025-04-04T15:30:00Z",
-  },
-]);
-
-const selectedChat = ref<Chat | null>(null);
-const selectedId = computed(() => selectedChat.value?.id || null);
-
-const filteredMessages = computed(() =>
-  selectedChat.value
-    ? messages.value.filter((msg) => msg.chatId === selectedChat.value?.id)
-    : [],
-);
-
-const handleSend = (text: string) => {
-  if (!selectedChat.value) return;
-  messages.value.push({
-    id: messages.value.length + 1,
-    chatId: selectedChat.value.id,
-    author: "user",
-    text,
-    time: new Date().toISOString(),
-  });
+const createNewChat = () => {
+  chatStore.selectedChatId = null;
 };
+
+onMounted(() => {
+  chatStore.getChats();
+});
 </script>
 
 <template>
   <div class="mt-20 flex h-[calc(100vh-80px)] w-full overflow-hidden border-t">
-    <ChatSidebar
-      :chats="chats"
-      :selected-id="selectedId"
-      @select="selectedChat = $event"
-    />
+    <div class="flex h-full w-80 flex-col border-r">
+      <div class="border-b p-4">
+        <UiButton block variant="primary" @click="createNewChat">
+          <Icon name="lucide:plus" class="mr-2" />
+          {{ $t("chat.new_chat") }}
+        </UiButton>
+      </div>
+      <ChatSidebar
+        :chats="chats"
+        :selected-id="selectedChatId"
+        @select="handleSelectChat($event as Chat)"
+      />
+    </div>
 
     <div class="flex flex-1">
       <Chat
@@ -81,8 +61,20 @@ const handleSend = (text: string) => {
         :messages="filteredMessages"
         @send="handleSend"
       />
-      <div v-else class="flex flex-1 items-center justify-center text-gray-500">
-        Select a chat to start messaging.
+      <div
+        v-else
+        class="m-auto flex w-full max-w-[1200px] flex-1 flex-col items-center justify-center"
+      >
+        <div class="mb-4 text-2xl font-medium text-gray-700">
+          {{ $t("chat.start") }}
+        </div>
+        <div class="mb-8 max-w-md text-center text-gray-500">
+          {{ $t("chat.type") }}
+        </div>
+        <ChatInput
+          :placeholder="$t('chat.placeholder')"
+          @send="handleSend"
+        />
       </div>
     </div>
   </div>

@@ -6,9 +6,15 @@ const props = defineProps({
     type: String,
     default: "default",
     validator: (value: string) =>
-      ["default", "primary", "secondary", "outline", "ghost", "icon"].includes(
-        value,
-      ),
+      [
+        "default",
+        "primary",
+        "secondary",
+        "outline",
+        "ghost",
+        "icon",
+        "soft",
+      ].includes(value),
   },
   size: {
     type: String,
