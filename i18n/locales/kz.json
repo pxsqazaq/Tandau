@@ -74,7 +74,7 @@
   },
   "profile": {
     "full_name": "Толық аты-жөні",
-    "firs_name": "Аты",
+    "first_name": "Аты",
     "last_name": "Тегі",
     "gender": "Жынысы",
     "date_of_birth": "Туған күні",
@@ -82,7 +82,8 @@
     "country": "Ел",
     "language": "Тіл",
     "edit": "Өзгерту",
-    "email": "Электрондық пошта"
+    "email": "Электрондық пошта",
+    "save": "Сақтау"
   },
   "chat": {
     "new_chat": "Жаңа чат",

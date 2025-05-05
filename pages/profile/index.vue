@@ -1,6 +1,8 @@
+
 <script setup lang="ts">
 import * as z from "zod";
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const userStore = useUserStore();
 
 const schema = z.object({
@@ -17,13 +19,13 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 const state = reactive<Partial<Schema>>({
-  first_name: userStore.userData.first_name || "First Name",
-  last_name: userStore.userData.last_name || "Last Name",
-  username: userStore.userData.username || "Username",
-  gender: userStore.userData.gender || "Gender",
-  country: userStore.userData.country || "Country",
-  language: userStore.userData.language || "Language",
-  date_of_birth: userStore.userData.date_of_birth || "Date of birth",
+  first_name: userStore.userData.first_name || t('profile.first_name'),
+  last_name: userStore.userData.last_name || t('profile.last_name'),
+  username: userStore.userData.username || t('profile.username'),
+  gender: userStore.userData.gender || t('profile.gender'),
+  country: userStore.userData.country || t('profile.country'),
+  language: userStore.userData.language || t('profile.language'),
+  date_of_birth: userStore.userData.date_of_birth || t('profile.date_of_birth'),
   profile_picture: userStore.userData.profile_picture,
 });
 
@@ -126,15 +128,15 @@ const edit = ref(false);
 
           <div class="flex flex-col">
             <h4 class="text-lg font-semibold">
-              {{ userStore.userData.first_name || "First Name" }}
-              {{ userStore.userData.last_name || "Last Name" }}
+              {{ userStore.userData.first_name || $t('profile.first_name') }}
+              {{ userStore.userData.last_name || $t('profile.last_name') }}
             </h4>
             <span class="text-gray-600">{{ userStore.userData.email }}</span>
           </div>
         </div>
 
         <UiButton :variant="edit ? 'primary' : 'soft'" @click="edit = !edit">
-          {{ edit ? "Save" : "Edit" }}
+          {{ edit ? $t('profile.save') : $t('profile.edit') }}
         </UiButton>
       </div>
 
@@ -143,14 +145,16 @@ const edit = ref(false);
         @submit.prevent="handleSubmit"
       >
         <fieldset>
-          <legend>Full Name</legend>
+          <legend>
+            {{ $t("profile.full_name") }}
+          </legend>
           <div class="flex gap-4">
             <span class="w-full">
               <UiInput
                 v-model="state.first_name"
                 type="text"
                 :disabled="!edit"
-                placeholder="First Name"
+                :placeholder= "$t('profile.first_name')"
               />
               <p v-if="errors.first_name" class="mt-1 text-sm text-red-500">
                 {{ errors.first_name }}
@@ -161,7 +165,7 @@ const edit = ref(false);
                 v-model="state.last_name"
                 type="text"
                 :disabled="!edit"
-                placeholder="Last Name"
+                :placeholder= "$t('profile.last_name')"
               />
               <p v-if="errors.last_name" class="mt-1 text-sm text-red-500">
                 {{ errors.last_name }}
@@ -171,12 +175,14 @@ const edit = ref(false);
         </fieldset>
 
         <fieldset>
-          <legend>Username</legend>
+          <legend>
+            {{ $t("profile.username") }}
+          </legend>
           <UiInput
             v-model="state.username"
             type="text"
             :disabled="!edit"
-            placeholder="Username"
+            :placeholder="$t('profile.username')"
           />
           <p v-if="errors.username" class="mt-1 text-sm text-red-500">
             {{ errors.username }}
@@ -184,48 +190,58 @@ const edit = ref(false);
         </fieldset>
 
         <fieldset>
-          <legend>Gender</legend>
+          <legend>
+            {{ $t("profile.gender") }}
+          </legend>
           <UiInput
             v-model="state.gender"
             type="text"
             :disabled="!edit"
-            placeholder="Gender"
+            :placeholder="$t('profile.gender')"
           />
         </fieldset>
 
         <fieldset>
-          <legend>Country</legend>
+          <legend>
+            {{ $t("profile.country") }}
+          </legend>
           <UiInput
             v-model="state.country"
             type="text"
             :disabled="!edit"
-            placeholder="Country"
+            :placeholder="$t('profile.country')"
           />
         </fieldset>
 
         <fieldset>
-          <legend>Language</legend>
+          <legend>
+            {{ $t("profile.language") }}
+          </legend>
           <UiInput
             v-model="state.language"
             type="text"
             :disabled="!edit"
-            placeholder="Language"
+            :placeholder="$t('profile.language')"
           />
         </fieldset>
 
         <fieldset>
-          <legend>Date of Birth</legend>
+          <legend>
+            {{ $t("profile.date_of_birth") }}
+          </legend>
           <UiInput
             v-model="state.date_of_birth"
             type="text"
             :disabled="!edit"
-            placeholder="Date of Birth"
+            :placeholder="$t('profile.date_of_birth')"
           />
         </fieldset>
       </form>
 
       <div class="space-y-4">
-        <h3 class="font-medium">My email Addresses</h3>
+        <h3 class="font-medium">
+          {{ $t("profile.email") }}
+        </h3>
 
         <div class="flex items-center gap-4">
           <div
@@ -245,3 +261,4 @@ const edit = ref(false);
     </div>
   </div>
 </template>
+
