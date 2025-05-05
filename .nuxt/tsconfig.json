@@ -138,7 +138,7 @@
         "./nuxt-i18n-logger"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev.json"
+        "./manifest/meta/dev"
       ],
       "#components": [
         "./components"

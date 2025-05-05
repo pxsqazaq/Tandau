@@ -1082,7 +1082,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://195.49.212.104:8000/api/v1",
+    "apiBase": "https://api.tanday.kz/api/v1",
     "accessTokenLifetime": "86400",
     "i18n": {
       "baseUrl": "",
