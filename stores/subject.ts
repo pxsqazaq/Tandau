@@ -46,7 +46,7 @@ export const useSubjectStore = defineStore("subject", () => {
       const data = await $subjectService.getSubjectCombinations();
       subjectCombinations.value = data;
     } catch (error) {
-      console.log("error in getSubjectCombinations");
+      console.log(error);
       errorMessage.value = error as string;
     } finally {
       isLoading.value = false;

@@ -2,7 +2,6 @@
 const route = useRoute();
 const id = computed(() => route.params.id);
 
-const countryUniversities = ref<any[]>([]);
 const universityStore = useUniversityStore();
 const { university, isLoading, errorMessage } = storeToRefs(universityStore);
 
@@ -61,13 +60,13 @@ watch(
     <div class="flex h-full w-full items-center justify-center bg-[rgba(0,0,0,0.6)]">
       <div class="space-y-4 text-white p-[80px]">
         <h2 class="text-5xl font-semibold">
-          {{ university.name }} ({{ university.country_name }})
+          {{ university.scholarship_name }} 
         </h2>
-        <p class="text-lg font-normal">
-          {{ university.description }}
+        <p class="text-4xl font-normal">
+          {{ university.name }}
         </p>
-        <p class="text-lg font-normal">
-          {{ university.scholarship_name }}
+        <p class="text-xl font-normal">
+          {{ university.description }}
         </p>
       </div>
     </div>
@@ -129,16 +128,15 @@ watch(
             {{ index + 1 }}
           </div>
         </div>
+
         <p>{{ item }}</p>
       </div>
     </div>
   </section>
-  <section>
-
-  </section>
 </template>
     <div v-else class="flex h-[50vh] items-center justify-center">
       <p class="text-xl">University not found</p>
+      <p>here</p>
     </div>
   </div>
 </template>

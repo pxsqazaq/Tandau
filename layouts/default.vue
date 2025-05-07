@@ -9,7 +9,7 @@ const route = useRoute();
       <slot />
     </Suspense>
     <Footer
-      v-if="route.path === '/' || route.path === '/kz' || route.path === '/ru'"
+      v-if="route.path === '/' || route.path === '/kk' || route.path === '/ru'"
     />
   </main>
 </template>

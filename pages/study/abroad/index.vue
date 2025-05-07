@@ -75,10 +75,10 @@ const addToFavorites = (item: University) => {
             class="flex flex-col items-center justify-center gap-4 bg-[rgba(0,0,0,0.6)] p-8 text-white"
             :class="{ 'animate-pulse bg-gray-300': universityStore.isLoading }"
           >
-          <h1 class="text-3xl text-semibold">{{ item.name }}</h1>
-          <h1 class="text-xl">{{ item.scholarship_name }}</h1>
+          <h1 class="text-3xl font-bold">{{ item.scholarship_name }}</h1>
+          <h1 class="text-xl font-bold">{{ item.name }}</h1>
             <ul class="flex flex-col gap-3 items-center">
-              <li v-for="(i, j) in item.scholarship_benefits" :key="j" class=" tracking-widest text-[18px] font-weight[10]">
+              <li v-for="(i, j) in item.scholarship_benefits" :key="j" class=" tracking-widest text-[15px] font-weight[10]">
                 ✅ {{ i }}
               </li>
             </ul>

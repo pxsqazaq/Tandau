@@ -42,6 +42,7 @@ export default (ofetch: $Fetch<any, NitroFetchRequest>) => {
             "accept-language": getAcceptLanguage(),
           },
         });
+        // console.log(data);
         return data;
     },
   
@@ -52,7 +53,7 @@ export default (ofetch: $Fetch<any, NitroFetchRequest>) => {
           "accept-Language": getAcceptLanguage(),
         },
       });
-  
+      console.log(data);
       return data;
     },
   

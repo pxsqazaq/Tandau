@@ -8,9 +8,6 @@ const props = defineProps<{
 
 const { locale } = useI18n();
 
-
-
-
 const emit = defineEmits<{
   "update:isOpen": [value: boolean];
 }>();
@@ -43,6 +40,7 @@ const filteredCombinations = computed(() => {
     );
   }
 
+  console.log("relevantCombinations", relevantCombinations);
   return relevantCombinations;
 });
 
@@ -102,9 +100,6 @@ const url = locale.value === 'en'
           variant="soft"
           @click="
             $router.push(
-              
-               
-              
               `/${url}?subject1=${selectedSubject?.id}&subject2=${getPairedSubject(combo).id}`
             )
           "
