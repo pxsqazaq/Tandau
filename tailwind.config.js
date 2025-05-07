@@ -10,10 +10,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        manrope: ['Manrope', 'sans-serif'], // Adding Manrope font to the theme
+      },
       typography: {
         DEFAULT: {
           css: {
             maxWidth: "none",
+            fontFamily: 'Manrope, sans-serif', // Set Manrope font to typography plugin
           },
         },
       },

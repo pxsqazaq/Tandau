@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Chat } from "~/types/chat";
+import type { Chat, Message, Messages } from "~/types/chat";
 
 const chatStore = useChatStore();
-const { chat, chats, selectedChatId } = storeToRefs(chatStore);
+const { chat, chats, selectedChatId, isLoading, lastMessage } = storeToRefs(chatStore);
 
 const selectedChat = computed(() => chat.value);
 const filteredMessages = computed(() => selectedChat.value?.messages || []);
@@ -13,6 +13,14 @@ const handleSelectChat = (selectedChat: Chat) => {
 
 const handleSend = async (text: string) => {
   if (selectedChatId.value) {
+    const newMessage: Message = {
+      id: Date.now(),
+      user_message: text,
+      answer_message: '',
+      chat_id: selectedChatId.value,
+      created_at: new Date().toISOString(),
+    };
+    chat.value?.messages.push(newMessage);
     await chatStore.sendMessage({
       chat_id: selectedChatId.value,
       user_message: text,
@@ -21,6 +29,14 @@ const handleSend = async (text: string) => {
     const newChatData = await chatStore.createChat({ chat_name: text });
     if (newChatData) {
       chatStore.selectedChatId = newChatData.id;
+      const newMessage: Message = {
+        id: Date.now(),
+        user_message: text,
+        answer_message: '',
+        chat_id: newChatData.id,
+        created_at: new Date().toISOString(),
+      };
+      chat.value?.messages.push(newMessage);
       await chatStore.sendMessage({
         chat_id: newChatData.id,
         user_message: text,
@@ -58,6 +74,8 @@ onMounted(() => {
       <Chat
         v-if="selectedChat"
         :chat="selectedChat"
+        :isLoading="isLoading"
+        :lastMessage="lastMessage"
         :messages="filteredMessages"
         @send="handleSend"
       />

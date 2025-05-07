@@ -1,7 +1,7 @@
 {
   "header": {
     "ai": "Find My Path with AI",
-    "kz": "Study in Kazakhstan",
+    "kk": "Study in Kazakhstan",
     "abroad": "Study Abroad",
     "chat": "Chat",
     "signIn": "Sign In",
@@ -100,7 +100,7 @@
     "description": "Dreaming of studying abroad? These top scholarships can cover your tuition, living expenses, and even travel costs!",
     "why_apply": "Why Apply for Scholarships?",
     "scholarships": "Featured Scholarships",
-    "leran_more": "Learn More",
+    "learn_more": "Learn More",
     "reduce" : "🎯 Reduce financial burden",
     "get_access" : "🌍 Get access to world-class education",
     "experience" : "💼 Experience new cultures and expand your network",
@@ -116,6 +116,13 @@
     "noSubjects": "No subject combinations found",
     "combinations": "Subject Combinations with",
     "search": "Search combinations..."
+  },
+  "specialties": {
+    "title": "Available Specialties",
+    "description": "Explore specialties available with your chosen subject combination",
+    "back": "Back to Subjects",
+    "noResults": "No specialties found for this subject combination",
+    "tryAgain": "Try another combination"
   }
 } 
 

@@ -30,6 +30,7 @@ export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callba
 export { setInterval } from '#app/compat/interval';
 export { useAPI } from '../composables/useAPI';
 export { useRefreshOnLocaleChange } from '../composables/useRefreshOnLocaleChange';
+export { reloadPage } from '../utils/reloadPage';
 export { useChatStore } from '../stores/chat';
 export { useFavoriteStore } from '../stores/favorite';
 export { default as stores } from '../stores/index';

@@ -9,6 +9,8 @@ export const useChatStore = defineStore("chat", () => {
   const isLoading = ref(false);
   const errorMessage = ref("");
 
+  const lastMessage = ref<string | null>(null);
+
   const selectedChatId = ref<number | null>(null);
   // const message = ref<string | null>(null);
 
@@ -51,6 +53,7 @@ export const useChatStore = defineStore("chat", () => {
   };
 
   const sendMessage = async (message: Messages) => {
+    lastMessage.value = message.user_message;
     isLoading.value = true;
     try {
       if (selectedChatId.value) {
@@ -86,6 +89,7 @@ export const useChatStore = defineStore("chat", () => {
       errorMessage.value = error as string;
     } finally {
       isLoading.value = false;
+      lastMessage.value = null;
     }
   };
 
@@ -111,5 +115,6 @@ export const useChatStore = defineStore("chat", () => {
     getChats,
     createChat,
     sendMessage,
+    lastMessage
   };
 });

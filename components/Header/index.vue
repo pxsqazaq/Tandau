@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { reloadPage } from "@/utils/reloadPage";
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -7,6 +8,10 @@ const { locales, locale, setLocale } = useI18n();
 
 const signOut = ref(false);
 const hideNavPages = ["/sign-in", "/sign-up", "/forgot-password"];
+
+const getLocalizedPath = (path: string) => {
+  return locale.value === 'en' ? path : `/${locale.value}${path}`;
+};
 
 const handleSignOut = async () => {
   await userStore.signOut();
@@ -18,17 +23,26 @@ const handleSignOut = async () => {
   <header
     class="absolute left-0 right-0 top-0 z-50 flex w-full items-center justify-between bg-transparent px-8 py-4 text-lg font-semibold"
   >
-    <NuxtLink to="/" class="flex items-center gap-2">
+    <NuxtLink :to="getLocalizedPath('/')" class="flex items-center gap-2">
       <NuxtImg
         :src="
-          route.path.startsWith('/study/') ? '/Logo-white.png' : '/Logo.png'
+          route.path.startsWith('/study/') ||
+          route.path.startsWith('/kk/study/') ||
+          route.path.startsWith('/ru/study/')
+            ? '/Logo-white.png'
+            : '/Logo.png'
         "
         width="40"
         height="40"
       />
       <span
         class="text-lg font-bold"
-        :class="{ 'text-white': route.path.startsWith('/study/') }"
+        :class="{
+          'text-white':
+            route.path.startsWith('/study/') ||
+            route.path.startsWith('/kk/study/') ||
+            route.path.startsWith('/ru/study/'),
+        }"
       >
         Tan'dau
       </span>
@@ -38,8 +52,13 @@ const handleSignOut = async () => {
       <ul class="flex items-center gap-8">
         <li>
           <NuxtLink
-            to="/chat"
-            :class="{ 'text-white': route.path.startsWith('/study/') }"
+            :to="getLocalizedPath('/chat')"
+            :class="{
+              'text-white':
+                route.path.startsWith('/study/') ||
+                route.path.startsWith('/kk/study/') ||
+                route.path.startsWith('/ru/study/'),
+            }"
           >
             {{ $t("header.ai") }}
           </NuxtLink>
@@ -47,17 +66,27 @@ const handleSignOut = async () => {
 
         <li>
           <NuxtLink
-            to="/study/kz"
-            :class="{ 'text-white': route.path.startsWith('/study/') }"
+            :to="getLocalizedPath('/study/kz')"
+            :class="{
+              'text-white':
+                route.path.startsWith('/study/') ||
+                route.path.startsWith('/kk/study/') ||
+                route.path.startsWith('/ru/study/'),
+            }"
           >
-            {{ $t("header.kz") }}
+            {{ $t("header.kk") }}
           </NuxtLink>
         </li>
 
         <li>
           <NuxtLink
-            to="/study/abroad"
-            :class="{ 'text-white': route.path.startsWith('/study/') }"
+            :to="getLocalizedPath('/study/abroad')"
+            :class="{
+              'text-white':
+                route.path.startsWith('/study/') ||
+                route.path.startsWith('/kk/study/') ||
+                route.path.startsWith('/ru/study/'),
+            }"
           >
             {{ $t("header.abroad") }}
           </NuxtLink>
@@ -66,10 +95,15 @@ const handleSignOut = async () => {
         <li>
           <NuxtLink
             v-if="!userStore.isAuthenticated"
-            to="/sign-in"
-            :class="{ 'text-white': route.path.startsWith('/study/') }"
+            :to="getLocalizedPath('/sign-in')"
+            :class="{
+              'text-white':
+                route.path.startsWith('/study/') ||
+                route.path.startsWith('/kk/study/') ||
+                route.path.startsWith('/ru/study/'),
+            }"
           >
-          {{ $t("header.signIn") }}
+            {{ $t("header.signIn") }}
           </NuxtLink>
           <UiDropdownMenu v-else>
             <template #trigger>
@@ -77,19 +111,25 @@ const handleSignOut = async () => {
                 name="lucide:circle-user"
                 class="mt-2 text-xl font-semibold"
                 :class="{
-                  'text-white': route.path.startsWith('/study/'),
+                  'text-white':
+                    route.path.startsWith('/study/') ||
+                    route.path.startsWith('/kk/study/') ||
+                    route.path.startsWith('/ru/study/'),
                 }"
               />
             </template>
 
             <template #menu="close">
-              <NuxtLink to="/profile" @click="close.closeDropdown">
+              <NuxtLink :to="getLocalizedPath('/profile')" @click="close.closeDropdown">
                 <UiButton variant="ghost" block class="!justify-start gap-2">
                   <Icon name="lucide:circle-user" /> {{ $t("header.profile") }}
                 </UiButton>
               </NuxtLink>
 
-              <NuxtLink to="/favorites" @click="close.closeDropdown">
+              <NuxtLink
+                :to="getLocalizedPath('/favorites')"
+                @click="close.closeDropdown"
+              >
                 <UiButton variant="ghost" block class="!justify-start gap-2">
                   <Icon name="lucide:bookmark" /> {{ $t("header.bookmarks") }}
                 </UiButton>
@@ -116,7 +156,10 @@ const handleSignOut = async () => {
               <span
                 class="flex items-center justify-between rounded-lg border-2 border-black px-2"
                 :class="{
-                  'border-white text-white': route.path.startsWith('/study/'),
+                  'border-white text-white':
+                    route.path.startsWith('/study/') ||
+                    route.path.startsWith('/kk/study/') ||
+                    route.path.startsWith('/ru/study/'),
                 }"
               >
                 {{ locale }}
@@ -131,8 +174,11 @@ const handleSignOut = async () => {
                 class="!justify-start"
                 @click="
                   () => {
-                    setLocale(loc.code);
-                    close.closeDropdown();
+                    setLocale(loc.code).then(() => {
+                      close.closeDropdown();
+                    }).finally(() => {
+                      reloadPage();
+                    });
                   }
                 "
               >

@@ -7,7 +7,7 @@ import locale_kz_46json_85dff2b1 from "#nuxt-i18n/85dff2b1";
 export const localeCodes =  [
   "en",
   "ru",
-  "kz"
+  "kk"
 ]
 
 export const localeLoaders = {
@@ -25,7 +25,7 @@ export const localeLoaders = {
       cache: true
     }
   ],
-  kz: [
+  kk: [
     {
       key: "locale_kz_46json_85dff2b1",
       load: () => Promise.resolve(locale_kz_46json_85dff2b1),
@@ -85,7 +85,7 @@ export const nuxtI18nOptions = {
       ]
     },
     {
-      code: "kz",
+      code: "kk",
       name: "Kazakh",
       files: [
         {
@@ -148,7 +148,7 @@ export const normalizedLocales = [
     ]
   },
   {
-    code: "kz",
+    code: "kk",
     name: "Kazakh",
     files: [
       {
@@ -238,8 +238,8 @@ async function loadCfg(config) {
   })
 
   import.meta.hot.accept("../i18n/locales/kz.json", async mod => {
-    localeLoaders["kz"][0].load = () => Promise.resolve(mod.default)
-    await useNuxtApp()._nuxtI18nDev.resetI18nProperties("kz")
+    localeLoaders["kk"][0].load = () => Promise.resolve(mod.default)
+    await useNuxtApp()._nuxtI18nDev.resetI18nProperties("kk")
   })
 
 

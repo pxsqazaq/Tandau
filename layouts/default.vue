@@ -8,6 +8,8 @@ const route = useRoute();
     <Suspense>
       <slot />
     </Suspense>
-    <Footer v-if="route.path === '/' || route.fullPath === '/kz' || route.fullPath === '/ru' " />
+    <Footer
+      v-if="route.path === '/' || route.path === '/kz' || route.path === '/ru'"
+    />
   </main>
 </template>

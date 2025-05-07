@@ -2,6 +2,10 @@
 import type { University } from "~/types/university";
 
 const universityStore = useUniversityStore();
+const { locales, locale, setLocale } = useI18n();
+const getLocalizedPath = (path: string) => {
+  return locale.value === 'en' ? path : `/${locale.value}${path}`;
+};
 
 const favoriteStore = useFavoriteStore();
 
@@ -71,19 +75,20 @@ const addToFavorites = (item: University) => {
             class="flex flex-col items-center justify-center gap-4 bg-[rgba(0,0,0,0.6)] p-8 text-white"
             :class="{ 'animate-pulse bg-gray-300': universityStore.isLoading }"
           >
-            <h4 class="text-lg font-medium">{{ item.name }}</h4>
-            <p>{{ item.description }}</p>
-            <ul>
-              <li v-for="(i, j) in item.scholarship_benefits" :key="j">
-                {{ i }}
+          <h1 class="text-3xl text-semibold">{{ item.name }}</h1>
+          <h1 class="text-xl">{{ item.scholarship_name }}</h1>
+            <ul class="flex flex-col gap-3 items-center">
+              <li v-for="(i, j) in item.scholarship_benefits" :key="j" class=" tracking-widest text-[18px] font-weight[10]">
+                ✅ {{ i }}
               </li>
             </ul>
 
-            <NuxtLink :to="`/study/abroad/${item.id}`">
+            <NuxtLink :to="`${getLocalizedPath('/')}study/abroad/${item.id}`">
               <UiButton variant="secondary" class="!px-12">
-                Learn more
+                {{ $t("abroad.learn_more") }}
               </UiButton>
             </NuxtLink>
+
           </div>
 
           <UiButton

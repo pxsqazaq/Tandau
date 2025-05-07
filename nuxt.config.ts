@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
@@ -8,14 +7,21 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/icon",
     "@nuxtjs/i18n",
+    '@nuxtjs/google-fonts', // Add the google fonts module
   ],
+  googleFonts: {
+    families: {
+      Manrope: [400, 600],  // Include the font weights you want
+    },
+  },
   i18n: {
     defaultLocale: "en",
     locales: [
       { code: "en", name: "English", file: "en.json" },
       { code: "ru", name: "Russian", file: "ru.json" },
-      { code: "kz", name: "Kazakh", file: "kz.json" },
+      { code: "kk", name: "Kazakh", file: "kz.json" },
     ],
+    strategy: 'prefix_except_default',  // Prefix routes except for the default locale
   },
   runtimeConfig: {
     public: {

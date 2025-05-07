@@ -46,7 +46,7 @@ export default (ofetch: $Fetch<any, NitroFetchRequest>) => {
     },
 
     getUniversityByCountry: async (country: string) => {
-      const data = await ofetch(`/universities/by-country/${country}`, {
+      const data = await ofetch(`/universities/by-country?country_name=${country}`, {
         method: "GET",
         headers: {
           "accept-language": getAcceptLanguage(),

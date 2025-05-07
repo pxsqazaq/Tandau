@@ -1118,7 +1118,7 @@ const _inlineRuntimeConfig = {
           ]
         },
         {
-          "code": "kz",
+          "code": "kk",
           "name": "Kazakh",
           "files": [
             {

@@ -6,6 +6,11 @@ const props = defineProps<{
   selectedSubject: Subject | null;
 }>();
 
+const { locale } = useI18n();
+
+
+
+
 const emit = defineEmits<{
   "update:isOpen": [value: boolean];
 }>();
@@ -47,6 +52,11 @@ const getPairedSubject = (combo: subjectCombinations) => {
   }
   return combo.subject1;
 };
+const url = locale.value === 'en' 
+  ? `study/specialities` 
+  : `${locale.value}/study/specialities`;
+
+
 </script>
 
 <template>
@@ -92,7 +102,10 @@ const getPairedSubject = (combo: subjectCombinations) => {
           variant="soft"
           @click="
             $router.push(
-              `/study/kz/specialties?subject1=${selectedSubject?.id}&subject2=${getPairedSubject(combo).id}`,
+              
+               
+              
+              `/${url}?subject1=${selectedSubject?.id}&subject2=${getPairedSubject(combo).id}`
             )
           "
         >

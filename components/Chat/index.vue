@@ -4,6 +4,8 @@ import type { Chat, Message } from "~/types/chat";
 defineProps<{
   chat: Chat;
   messages: Message[];
+  isLoading: boolean;
+  lastMessage: string | null;
 }>();
 
 const emit = defineEmits<{
@@ -94,6 +96,21 @@ const formatDateTime = (dateString: string) => {
 
             <div class="max-w-[1100px] text-gray-600">
               <ChatMessage :content="msg.answer_message" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="isLoading" class="flex items-start gap-4">
+        <div class="w-full max-w-sm rounded-md">
+          <div class="flex animate-pulse space-x-4">
+            <div
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-indigo-500"
+          >
+            <Icon name="lucide:bot" />
+          </div>
+            <div class="flex-1 space-y-6 py-1">
+              <div class="h-4 mt-2 rounded bg-gray-200"></div>
+              <div class="col-span-1 h-6 rounded bg-gray-200"></div>
             </div>
           </div>
         </div>
