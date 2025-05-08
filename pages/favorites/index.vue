@@ -24,15 +24,10 @@ const removeFavorites = (id: number) => {
         <h1 class="text-3xl text-semibold">{{ item.name }}</h1>
           <h1 class="text-xl">{{ item.scholarship_name }}</h1>
             <ul class="flex flex-col gap-3 items-center">
-              <li v-for="(i, j) in item.scholarship_benefits" :key="j" class=" tracking-widest text-[10px] font-weight[10]">
+              <li v-for="(i, j) in item.scholarship_benefits" :key="j" class=" tracking-widest text-[15px] font-weight[10]">
                 ✅ {{ i }}
               </li>
             </ul>
-
-
-          <NuxtLink :to="item.to">
-            <UiButton variant="secondary" class="!px-12"> Learn more </UiButton>
-          </NuxtLink>
         </div>
 
         <UiButton

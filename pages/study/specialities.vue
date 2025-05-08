@@ -90,8 +90,8 @@ onUnmounted(() => {
               :to="`/specialty/${specialty.id}`"
               class="inline-flex items-center gap-2 text-blue-600"
             >
-              View details
-              <i class="ri-arrow-right-line" />
+              <!-- View details
+              <i class="ri-arrow-right-line" /> -->
             </NuxtLink>
           </div>
         </div>
