@@ -68,7 +68,6 @@ onMounted(() => {
           @click="openModal(subject)"
         >
           {{ subject.name }}
-          
         </UiButton>
       </div>
 

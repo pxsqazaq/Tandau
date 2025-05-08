@@ -8,6 +8,14 @@ const formattedContent = computed(() => {
 
   let formatted = props.content;
 
+  // Обработка markdown заголовков (h1-h6)
+  formatted = formatted.replace(/^### (.*?)$/gm, '<h3 class="text-xl font-bold my-3">$1</h3>');
+  formatted = formatted.replace(/^## (.*?)$/gm, '<h2 class="text-2xl font-bold my-3">$1</h2>');
+  formatted = formatted.replace(/^# (.*?)$/gm, '<h1 class="text-3xl font-bold my-4">$1</h1>');
+  formatted = formatted.replace(/^#### (.*?)$/gm, '<h4 class="text-lg font-bold my-2">$1</h4>');
+  formatted = formatted.replace(/^##### (.*?)$/gm, '<h5 class="text-base font-bold my-2">$1</h5>');
+  formatted = formatted.replace(/^###### (.*?)$/gm, '<h6 class="text-sm font-bold my-2">$1</h6>');
+
   if (formatted.startsWith("Here are")) {
     const introEnd = formatted.indexOf("1.");
     if (introEnd > 0) {
@@ -43,10 +51,24 @@ const formattedContent = computed(() => {
     }
   }
 
-  formatted = formatted
-    .split("\n\n")
-    .map((p) => `<p>${p}</p>`)
-    .join("");
+  // Проверяем, есть ли уже HTML-теги заголовков в тексте перед разделением на параграфы
+  const hasHeadings = /<h[1-6]/.test(formatted);
+
+  if (!hasHeadings) {
+    formatted = formatted
+      .split("\n\n")
+      .map((p) => `<p>${p}</p>`)
+      .join("");
+  } else {
+    // Если есть заголовки, то обрабатываем абзацы более аккуратно
+    formatted = formatted
+      .split("\n\n")
+      .map((p) => {
+        // Не оборачиваем в <p> контент, который уже содержит заголовки
+        return p.startsWith('<h') ? p : `<p>${p}</p>`;
+      })
+      .join("");
+  }
 
   return formatted;
 });
@@ -95,5 +117,15 @@ const formattedContent = computed(() => {
 
 .message-content :deep(p) {
   @apply mb-3;
+}
+
+/* Стили для markdown заголовков */
+.message-content :deep(h1),
+.message-content :deep(h2),
+.message-content :deep(h3),
+.message-content :deep(h4),
+.message-content :deep(h5),
+.message-content :deep(h6) {
+  @apply text-indigo-800 font-semibold;
 }
 </style>
