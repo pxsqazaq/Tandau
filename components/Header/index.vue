@@ -58,6 +58,8 @@ const handleSignOut = async () => {
                 route.path.startsWith('/study/') ||
                 route.path.startsWith('/kk/study/') ||
                 route.path.startsWith('/ru/study/'),
+              'text-yellow-500': 
+                route.path.startsWith('/chat')
             }"
           >
             {{ $t("header.ai") }}
@@ -69,9 +71,13 @@ const handleSignOut = async () => {
             :to="getLocalizedPath('/study/kz')"
             :class="{
               'text-white':
-                route.path.startsWith('/study/') ||
-                route.path.startsWith('/kk/study/') ||
-                route.path.startsWith('/ru/study/'),
+                route.path.startsWith('/study/abroad') ||
+                route.path.startsWith('/kk/study/abroad') ||
+                route.path.startsWith('/ru/study/abroad'),
+              'text-yellow-500': 
+                route.path.startsWith('/study/kz') || 
+                route.path.startsWith('/kk/study/kz') || 
+                route.path.startsWith('/ru/study/kz')
             }"
           >
             {{ $t("header.kk") }}
@@ -82,10 +88,14 @@ const handleSignOut = async () => {
           <NuxtLink
             :to="getLocalizedPath('/study/abroad')"
             :class="{
-              'text-white':
-                route.path.startsWith('/study/') ||
-                route.path.startsWith('/kk/study/') ||
-                route.path.startsWith('/ru/study/'),
+              'text-white': 
+                route.path.startsWith('/study/kz') || 
+                route.path.startsWith('/kk/study/kz') || 
+                route.path.startsWith('/ru/study/kz'),
+              'text-yellow-500': 
+                route.path.startsWith('/study/abroad') || 
+                route.path.startsWith('/kk/study/abroad') || 
+                route.path.startsWith('/ru/study/abroad')
             }"
           >
             {{ $t("header.abroad") }}
